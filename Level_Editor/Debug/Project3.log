@@ -1,0 +1,7 @@
+﻿  Source.cpp
+c:\users\octav\desktop\level_editor\level_editor\level_editor\level_editor\source.cpp(24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Project3.vcxproj -> C:\Users\octav\Desktop\Level_Editor\Level_Editor\Level_Editor\Level_Editor\Debug\Project3.exe
