@@ -4,6 +4,36 @@
 #include <string>
 using namespace std;
 
+class Assets
+{
+public:
+
+	sf::Sprite asset;
+
+	int assetType = 0;
+
+	int assetPosx;
+	int assetPosy;
+
+	void CreateAsset(int setposx, int setposy)
+	{
+		assetPosx = setposx;
+		assetPosy = setposy;
+
+		asset.setPosition(sf::Vector2f(assetPosx, assetPosy));
+	}
+
+	void ChangeAssetType()
+	{
+		assetType++;
+		
+		if (assetType < 3)
+		{
+			assetType = 0;
+		}
+	}
+};
+
 // Class for the Sprite tiles
 class Tile
 {
@@ -71,12 +101,21 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(windowx, windowy), "Tile Thing");
 
 	Tile tileArray[600];
+	Assets assetArray[600];
 
 	// Loop to create the tiles in 30x20 square
 	for (int i = 0; i < 30; i++)
 	{
 		for (int j = 0; j < 20; j++) {
 			tileArray[(i * 20 + j)].CreateTile(32 * i, 32 * j);
+		}
+	}
+
+	for (int i = 0; i < 30; i++)
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			assetArray[(i * 20 + j)].CreateAsset(32 * i, 32 * j);
 		}
 	}
 
@@ -91,15 +130,35 @@ int main()
 			// Detection of mouse interaction (clicking)
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
-				sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-				sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-				
-				// When mouse clicked the tile type changes ("ChangeTileType()")
-				for (int i = 0; i < 600; i++)
+				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					if (tileArray[i].tile.getGlobalBounds().contains(mousePosF))
+					sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+					sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+
+					// When mouse clicked the tile type changes ("ChangeTileType()")
+					for (int i = 0; i < 600; i++)
 					{
-						tileArray[i].ChangeTileType();
+						if (tileArray[i].tile.getGlobalBounds().contains(mousePosF))
+						{
+							tileArray[i].ChangeTileType();
+						}
+					}
+				}
+			}
+
+			if (event.type == sf::Event::MouseButtonReleased)
+			{
+				if (event.mouseButton.button == sf::Mouse::Right)
+				{
+					sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+					sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+
+					for (int i = 0; i < 600; i++)
+					{
+						if (assetArray[i].asset.getGlobalBounds().contains(mousePosF))
+						{
+							assetArray[i].ChangeAssetType();
+						}
 					}
 				}
 			}
@@ -183,7 +242,26 @@ int main()
 				break;
 			}
 
-		window.draw(tileArray[i].tile);
+			window.draw(tileArray[i].tile);
+		}
+
+		for (int i = 0; i < 600; i++)
+		{
+			switch (assetArray[i].assetType)
+			{
+			case 0:
+				break;
+			case 1:
+				assetArray[i].asset.setTexture(coin);
+				break;
+			case 2:
+				assetArray[i].asset.setTexture(door);
+				break;
+			case 3:
+				assetArray[i].asset.setTexture(player);
+				break;
+			}
+			window.draw(assetArray[i].asset);
 		}
 		window.display();
 		}

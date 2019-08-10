@@ -1,5 +1,10 @@
 ﻿  Source.cpp
-c:\users\octav\desktop\gad173-level-editor\level_editor\source.cpp(24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+c:\users\octav\desktop\gad173-level-editor\level_editor\source.cpp(23): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\octav\desktop\gad173-level-editor\level_editor\source.cpp(54): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
